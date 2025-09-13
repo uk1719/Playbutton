@@ -1,9 +1,9 @@
 #include <Arduino.h>
 
-int Button_pin1=12;//〇12
-int Button_pin2=14;//〇13
-int Button_pin3=27;//〇27
-int Button_pin4=26;//〇23
+int Button_pin1=12;
+int Button_pin2=14;
+int Button_pin3=27;
+int Button_pin4=26;
 
 int Button_input1=0;
 int Button_input2=0;
@@ -36,8 +36,10 @@ int Button_error=0;
 */
 
 int Button_num=0;
+int Button_cal=0;
 
 int Button_correct_num=0;
+int Button_correct_cal=0;
 int Button_correct1=0;
 int Button_correct2=0;
 int Button_correct3=0;
@@ -148,11 +150,13 @@ void loop() {
 
   Serial.print("Serial_num:");
   Serial.println(Serial_num);
-  delay(500);
+  delay(200);
   Serial.print("correctnum:");
   Serial.println(Button_correct_num);
+  delay(200);
   Serial.print("Button_num:");
   Serial.println(Button_num);
+  delay(200);
 /*
   digitalWrite(LED_pin1,HIGH);
   digitalWrite(LED_pin2,HIGH);
@@ -275,28 +279,35 @@ if(Button_input1+Button_input2+Button_input3==1)
   if(Button_status==3)
   {
      digitalWrite(LED_pin1,LOW);
-        digitalWrite(LED_pin2,LOW);
+      digitalWrite(LED_pin2,LOW);
         digitalWrite(LED_pin3,LOW);
 
-    if(Button_correct_num%100==Button_num%100)
+        Button_cal=Button_num;
+        Button_correct_cal=Button_correct_num;
+    if((Button_correct_cal-Button_correct_cal%100)/100==(Button_cal-Button_cal%100)/100)
     {
       correct_cnt++;  
     }
-    Button_correct_num=Button_correct_num-Button_correct_num%100;
-    Button_num=Button_num-Button_num%100;
-    if(Button_correct_num%10==Button_num%10)
+    Button_correct_cal=Button_correct_cal%100;
+    Button_cal=Button_cal%100;
+    if((Button_correct_cal-Button_correct_cal%10)/10==(Button_cal-Button_cal%10)/10)
     {
       correct_cnt++;
     }
-    Button_correct_num=Button_correct_num-Button_correct_num%10;
-    Button_num=Button_num-Button_num%10;
-    if(Button_correct_num%10==Button_num%10)
+    Button_correct_cal=Button_correct_cal%10;
+    Button_cal=Button_cal%10;
+    if(Button_correct_cal==Button_cal)
     {
       correct_cnt++;
     }
     if(correct_cnt==0)
     {
-
+      Button_status=0;
+      Button_num=0;
+      Button_flag1=0;
+      Button_flag2=0;
+      Button_flag3=0;
+      correct_cnt=0;
     }
     else if(correct_cnt==1)
     {
@@ -308,9 +319,11 @@ if(Button_input1+Button_input2+Button_input3==1)
         delay(200);
       }
       Button_status=0;
+      Button_num=0;
       Button_flag1=0;
       Button_flag2=0;
       Button_flag3=0;
+      correct_cnt=0;
     digitalWrite(LED_pin1,LOW);
     digitalWrite(LED_pin2,LOW);
     digitalWrite(LED_pin3,LOW);
@@ -329,19 +342,22 @@ if(Button_input1+Button_input2+Button_input3==1)
         delay(200);
       }
       Button_status=0;
+      Button_num=0;
       Button_flag1=0;
       Button_flag2=0;
       Button_flag3=0;
+      correct_cnt=0;
     digitalWrite(LED_pin1,LOW);
     digitalWrite(LED_pin2,LOW);
     digitalWrite(LED_pin3,LOW);
     }
     else if(correct_cnt==3)
     {
-      Button_status=0;
+      Button_status=3;
       Button_flag1=0;
       Button_flag2=0;
       Button_flag3=0;
+      correct_cnt=0;
       for(int i=0;i<5;i++)
       {
         digitalWrite(LED_pin1,HIGH);
