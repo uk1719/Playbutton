@@ -150,13 +150,13 @@ void loop() {
 
   Serial.print("Serial_num:");
   Serial.println(Serial_num);
-  delay(200);
+  delay(500);
   Serial.print("correctnum:");
   Serial.println(Button_correct_num);
-  delay(200);
   Serial.print("Button_num:");
   Serial.println(Button_num);
-  delay(200);
+  Serial.print("Button_status:");
+  Serial.println(Button_status);
 /*
   digitalWrite(LED_pin1,HIGH);
   digitalWrite(LED_pin2,HIGH);
@@ -248,7 +248,7 @@ if(Button_input1+Button_input2+Button_input3==1)
     else if(Button_status==2)
     {
       Button_num=Button_num+300;
-      Button_status==3;
+      Button_status=3;
     }
   }
   }
